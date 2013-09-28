@@ -11,9 +11,9 @@ import pastebin_constants
 import httpclient
 import cgi
 import strutils
-import xmldom
-import xmldomparser
+import xmlparser
 import xmltree
+import streams
 
 
 proc createPaste*(devKey : string, pasteData : string, pasteName : string = "", pasteFormat : string = "", pastePrivate : int = 0, pasteExpire : string = ""): string = 
@@ -88,38 +88,11 @@ proc getUserInfo*(devKey : string, userKey : string): array[9, string] =
     # Create the paste.
     var response : string = postContent("http://pastebin.com/api/api_post.php", "Content-Type: application/x-www-form-urlencoded;\c\L", params)
     
-    # This next part is far from ideal, but Nimrod's XML parsing capabilities
-    # are rather sub-par right now, so I have to do this to get around that.
-    # TODO: fix!
-    
-    # Remove the tags.
-    response = response.replace("<user_name>").replace("</user_name>")
-    response = response.replace("<user_format_short>").replace("</user_format_short>")
-    response = response.replace("<user_expiration>").replace("</user_expiration>")
-    response = response.replace("<user_avatar_url>").replace("</user_avatar_url>")
-    response = response.replace("<user_private>").replace("</user_private>")
-    response = response.replace("<user_website>").replace("</user_website>")
-    response = response.replace("<user_email>").replace("</user_email>")
-    response = response.replace("<user_location>").replace("</user_location>")
-    response = response.replace("<user_account_type>").replace("</user_account_type>")
-    
-    # Split into lines.
-    var response_array : seq[string] = response.splitLines()
-    
-    # Create the user info array.
-    var info : array[9, string]
-    info[0] = response_array[1]
-    info[1] = response_array[2]
-    info[2] = response_array[3]
-    info[3] = response_array[4]
-    info[4] = response_array[5]
-    info[5] = response_array[6]
-    info[6] = response_array[7]
-    info[7] = response_array[8]
-    info[8] = response_array[9]
+    # Parse the XML.
+    var xml : PXmlNode = parseXML(newStringStream(response))
     
     # Return the user info.
-    return info    
+    return [xml[0].innerText, xml[1].innerText, xml[2].innerText, xml[3].innerText, xml[4].innerText, xml[5].innerText, xml[6].innerText, xml[7].innerText, xml[7].innerText]
 
 
 proc getPaste*(pasteKey : string): string = 
