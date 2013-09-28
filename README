@@ -19,11 +19,27 @@ createPasteFromFile(devKey : string, fileName: string, pasteName : string = "", 
 createAPIUserKey(devKey : string, userName : string, userPassword : string): string
 * Creates a user key. All parameters are required. Returns either the user key or an error message.
 
+listUserPastes(devKey : string, userKey : string, resultsLimit : int = 50): seq[seq[string]]
+* Lists a user's pastes. All paramets are required except for resultsLimit. Returns a sequence of sequences of strings, with the information at the folling indicies:
+0 - paste key
+1 - date created
+2 - title
+3 - size
+4 - expiration date
+5 - privacy setting
+6 - long format
+7 - short format
+8 - paste URL
+9 - number of hits
+
+listTrendingPastes(devKey : string): seq[seq[string]]
+* Lists the top 18 trending pastes. Parameter is required. Returns a sequence of sequences of strings, in the same format as the return value of listUserPastes().
+
 deletePaste(devKey : string, userKey : string, pasteKey : string): string
 * Deletes a paste. All parameters are required. Returns a status message.
 
-getUserInfo(devKey : string, userKey : string): array[9, string]
-* Gets info about a user. All parameters are required. Returns an array with the information at the following indices:
+getUserInfo(devKey : string, userKey : string): seq[string]
+* Gets info about a user. All parameters are required. Returns a sequence with the information at the following indices:
 0 - user name
 1 - short format
 2 - user expiration date
