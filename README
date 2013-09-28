@@ -1,1 +1,20 @@
-NOWHERE NEAR DONE
+#### ABOUT ####
+
+nimrod-pastebin is a Nimrod wrapper for the Pastebin API. It consists of three files:
+
+* pastebin.nim - Main file, contains the functions.
+* pastebin_formats.nim - Contains format constants.
+* pastebin_constants.nim - Contains miscellaneous constants.
+
+----
+
+#### DOCUMENTATION ####
+
+not done yet...
+
+
+----
+
+#### LICENSE ####
+
+nimrod-pastebin is released under the MIT Open Source License. See the LICENSE file for more information.
