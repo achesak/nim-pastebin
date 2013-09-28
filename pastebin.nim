@@ -64,38 +64,6 @@ proc createAPIUserKey*(devKey : string, userName : string, userPassword : string
     return response
 
 
-
-
-
-
-
-
-
-
-
-
-proc listUsersPastes*(devKey : string, resultsLimit : int = 50): string = 
-    # stuff goes here
-
-
-proc listTrendingPastes*(devKey : string): string = 
-    # stuff goes here
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 proc deletePaste*(devKey : string, userKey : string, pasteKey : string): string = 
     # Deletes a paste.
     
