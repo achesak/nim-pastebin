@@ -10,8 +10,37 @@ nimrod-pastebin is a Nimrod wrapper for the Pastebin API. It consists of three f
 
 #### DOCUMENTATION ####
 
-not done yet...
+createPaste(devKey : string, pasteData : string, pasteName : string = "", pasteFormat : string = "", pastePrivate : int = 0, pasteExpire : string = ""): string
+* Creates a new paste. devKey and pasteData are required, but everything else is optional. Returns either the URL of the paste or an error message.
 
+createPasteFromFile(devKey : string, fileName: string, pasteName : string = "", pasteFormat : string = "", pastePrivate : int = 0, pasteExpire : string = ""): string
+* Creates a new paste from a file. devKey and fileName are required, but everything else is optional. Returns either the URL of the paste or an error message.
+
+createAPIUserKey(devKey : string, userName : string, userPassword : string): string
+* Creates a user key. All parameters are required. Returns either the user key or an error message.
+
+deletePaste(devKey : string, userKey : string, pasteKey : string): string
+* Deletes a paste. All parameters are required. Returns a status message.
+
+getUserInfo(devKey : string, userKey : string): array[9, string]
+* Gets info about a user. All parameters are required. Returns an array with the information at the following indices:
+0 - user name
+1 - short format
+2 - user expiration date
+3 - avatar URL
+4 - privacy setting
+5 - website
+6 - email
+7 - location
+8 - account type
+
+getPaste(pasteKey : string): string
+* Gets a paste. Parameter is required. Returns the contents of the paste.
+
+getPasteToFile(pasteKey : string, fileName : string): string
+* Gets a paste and writes it to a file. All parameters are required. Returns the contents of the paste.
+
+See http://pastebin.com/api for more information on the Pastebin API.
 
 ----
 
