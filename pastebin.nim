@@ -36,6 +36,18 @@ proc createPaste*(devKey : string, pasteData : string, pasteName : string = "", 
 
 proc createPasteFromFile*(devKey : string, fileName: string, pasteName : string = "", pasteFormat : string = "", pastePrivate : int = 0, pasteExpire : string = ""): string = 
     # Creates a new paste from a file.
+    
+    # Get the contents of the file.
+    var contents : string = readAll(open(fileName))
+    
+    # Create the paste.
+    var response : string = createPaste(devKey, contents, pasteName, pasteFormat, pastePrivate, pasteExpire)
+    
+    # Return either the URL or the error message.
+    return response
+
+var test : string = createPasteFromFile("d2314ff616133e54f728918b8af1500e", "pastebin.nim", pastePrivate = 2, pasteExpire = EXPIRE_1_MONTH)
+echo(test)
 
 
 proc createAPIUserKey*(devKey : string, userName : string, userPassword : string): string = 
