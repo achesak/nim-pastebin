@@ -77,8 +77,14 @@ proc deletePaste*(devKey : string, userKey : string, pasteKey : string): bool =
 #    # stuff goes here
 
 
-proc getPaste*(devKey : string, pasteKey : string): string = 
-    # stuff goes here
+proc getPaste*(pasteKey : string): string = 
+    # Gets a paste.
+    
+    # Get the data.
+    var data : string = getContent("http://pastebin.com/raw.php?i=" & pasteKey)
+    
+    # Return the paste data.
+    return data
 
 
 proc getPasteToFile*(devKey : string, pasteKey : string, fileName : string): string = 
