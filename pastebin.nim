@@ -3,7 +3,7 @@
 # Written by Adam Chesak.
 # Code released under the MIT open source license.
 
-# Import the constants.
+# Import the formats and constants.
 import pastebin_formats
 import pastebin_constants
 
@@ -46,12 +46,19 @@ proc createPasteFromFile*(devKey : string, fileName: string, pasteName : string 
     # Return either the URL or the error message.
     return response
 
-var test : string = createPasteFromFile("d2314ff616133e54f728918b8af1500e", "pastebin.nim", pastePrivate = 2, pasteExpire = EXPIRE_1_MONTH)
-echo(test)
-
 
 proc createAPIUserKey*(devKey : string, userName : string, userPassword : string): string = 
-    # stuff goes here
+    # Gets a user session key.
+    
+    # Build the parameters.
+    var params : string = "api_dev_key=" & devKey
+    params = params & "&api_user_name=" & userName & "&api_user_password=" & userPassword
+    
+    # Create the paste.
+    var response : string = postContent("http://pastebin.com/api/api_login.php", "Content-Type: application/x-www-form-urlencoded;\c\L", params)
+    
+    # Return either the use key or the error message.
+    return response
 
 
 proc listUsersPastes*(devKey : string, resultsLimit : int = 50): string = 
