@@ -87,7 +87,14 @@ proc getPaste*(pasteKey : string): string =
     return data
 
 
-proc getPasteToFile*(devKey : string, pasteKey : string, fileName : string): string = 
-    # stuff goes here
-    # also return paste data
-
+proc getPasteToFile*(pasteKey : string, fileName : string): string = 
+    # Gets a paste and stores it in a file.
+    
+    # Get the data.
+    var data : string = getContent("http://pastebin.com/raw.php?i=" & pasteKey)
+    
+    # Write the data to the file.
+    write(open(fileName, fmWrite), data)
+    
+    # Return the paste data.
+    return data
