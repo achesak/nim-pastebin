@@ -69,8 +69,18 @@ proc listTrendingPastes*(devKey : string): string =
     # stuff goes here
 
 
-proc deletePaste*(devKey : string, userKey : string, pasteKey : string): bool = 
-    # stuff goes here
+proc deletePaste*(devKey : string, userKey : string, pasteKey : string): string = 
+    # Deletes a paste.
+    
+    # Build the parameters.
+    var params : string = "api_option=delete&api_dev_key=" & devKey
+    params = params & "&api_user_key=" & userKey & "&api_paste_key=" & pasteKey
+    
+    # Create the paste.
+    var response : string = postContent("http://pastebin.com/api/api_post.php", "Content-Type: application/x-www-form-urlencoded;\c\L", params)
+    
+    # Returns the status message.
+    return response
 
 
 #proc getUserInfo*(devKey : string, userKey : string): array[] = 
@@ -98,3 +108,4 @@ proc getPasteToFile*(pasteKey : string, fileName : string): string =
     
     # Return the paste data.
     return data
+  
